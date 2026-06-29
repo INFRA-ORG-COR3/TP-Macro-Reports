@@ -75,4 +75,13 @@ El script fuente usado para generar las variantes esta en:
 
 `scripts/build_tp_macro.ps1`
 
+El script usa rutas relativas al repositorio clonado:
+
+- `templates/Template TP.xlsx`
+- `templates/Aguada.xlsx`
+- `assets/cor3_logo.png`
+- `outputs/`
+
+No depende de carpetas locales de una computadora especifica.
+
 Los resultados temporales de pruebas visuales y carpetas de export masivo no se incluyen en este repositorio porque son archivos generados durante QA. El repo contiene los workbooks finales, variantes, templates, logo y sample data necesarios para reproducir el proceso.

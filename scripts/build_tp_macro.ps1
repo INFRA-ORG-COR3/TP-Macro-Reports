@@ -1,9 +1,10 @@
 $ErrorActionPreference = 'Stop'
 
-$root = Split-Path -Parent $PSScriptRoot
-$templatePath = 'C:\Users\CVM5490\Downloads\Template TP.xlsx'
-$exportTemplatePath = 'C:\Users\CVM5490\Downloads\Aguada.xlsx'
-$logoPath = Join-Path $root 'work\cor3_logo.png'
+$scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $MyInvocation.MyCommand.Path }
+$root = Split-Path -Parent $scriptDir
+$templatePath = Join-Path $root 'templates\Template TP.xlsx'
+$exportTemplatePath = Join-Path $root 'templates\Aguada.xlsx'
+$logoPath = Join-Path $root 'assets\cor3_logo.png'
 $outputPath = Join-Path $root 'outputs\Template TP - Macro Portal Transparencia - Export Municipios Applicant Type - Template Aguada.xlsm'
 
 if (-not (Test-Path -LiteralPath $templatePath)) {
@@ -14,6 +15,59 @@ if (-not (Test-Path -LiteralPath $exportTemplatePath)) {
 }
 
 Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+function Remove-WorkbookLocalPathMetadata {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string]$RootPath
+    )
+
+    if (-not (Test-Path -LiteralPath $Path)) { return }
+
+    $resolvedRoot = (Resolve-Path -LiteralPath $RootPath).Path.TrimEnd('\') + '\'
+    $outputsRoot = (Resolve-Path -LiteralPath (Join-Path $RootPath 'outputs')).Path.TrimEnd('\') + '\'
+    $templatesRoot = (Resolve-Path -LiteralPath (Join-Path $RootPath 'templates')).Path.TrimEnd('\') + '\'
+    $replacements = [ordered]@{}
+    $replacements[$outputsRoot] = '.\outputs\'
+    $replacements[$templatesRoot] = '.\templates\'
+    $replacements[$resolvedRoot] = '.\'
+
+    $tempPath = [System.IO.Path]::GetTempFileName()
+    $sourceZip = [System.IO.Compression.ZipFile]::OpenRead($Path)
+    $targetZip = [System.IO.Compression.ZipFile]::Open($tempPath, [System.IO.Compression.ZipArchiveMode]::Create)
+    try {
+        foreach ($entry in $sourceZip.Entries) {
+            $newEntry = $targetZip.CreateEntry($entry.FullName, [System.IO.Compression.CompressionLevel]::Optimal)
+            $newEntry.LastWriteTime = $entry.LastWriteTime
+
+            $memory = New-Object System.IO.MemoryStream
+            $entryStream = $entry.Open()
+            try { $entryStream.CopyTo($memory) }
+            finally { $entryStream.Dispose() }
+            $bytes = $memory.ToArray()
+            $memory.Dispose()
+
+            if ($entry.FullName -match '\.(xml|rels)$') {
+                $text = [System.Text.Encoding]::UTF8.GetString($bytes)
+                foreach ($item in $replacements.GetEnumerator()) {
+                    $text = $text.Replace($item.Key, $item.Value)
+                }
+                $bytes = [System.Text.Encoding]::UTF8.GetBytes($text)
+            }
+
+            $targetStream = $newEntry.Open()
+            try { $targetStream.Write($bytes, 0, $bytes.Length) }
+            finally { $targetStream.Dispose() }
+        }
+    }
+    finally {
+        $sourceZip.Dispose()
+        $targetZip.Dispose()
+    }
+
+    Move-Item -LiteralPath $tempPath -Destination $Path -Force
+}
+
 $zip = [System.IO.Compression.ZipFile]::OpenRead($exportTemplatePath)
 try {
     $mediaEntry = $zip.Entries | Where-Object { $_.FullName -like 'xl/media/*' } | Select-Object -First 1
@@ -898,5 +952,7 @@ finally {
     [GC]::Collect()
     [GC]::WaitForPendingFinalizers()
 }
+
+Remove-WorkbookLocalPathMetadata -Path $outputPath -RootPath $root
 
 Write-Output $outputPath
