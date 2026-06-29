@@ -1,0 +1,19 @@
+# Windows and Office temporary files
+Thumbs.db
+Desktop.ini
+~$*
+*.tmp
+
+# Local validation/export scratch folders
+work/
+validation/
+tmp/
+temp/
+exports/
+
+# Local Codex/editor metadata
+.codex/
+.agents/
+.vscode/
+.idea/
+
