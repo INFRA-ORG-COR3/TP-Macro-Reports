@@ -4,6 +4,8 @@ Repositorio para los archivos macro de Excel que refrescan el reporte del portal
 
 ## Archivos principales
 
+Estas son las dos variantes activas que se deben usar y mantener:
+
 - `outputs/Template TP - Macro Portal Transparencia - Version Final Sin QPR Sin Localizacion.xlsm`
   - Version final regular del reporte.
   - No incluye `Periodo de QPR` ni `Localizacion`.
@@ -16,7 +18,7 @@ Repositorio para los archivos macro de Excel que refrescan el reporte del portal
 
 ## Otras variantes incluidas
 
-La carpeta `outputs/` incluye las variantes anteriores y finales que se construyeron durante el proceso:
+La carpeta `outputs/` tambien conserva variantes historicas que se construyeron durante el proceso:
 
 - `Template TP - Macro Portal Transparencia.xlsm`
 - `Template TP - Macro Portal Transparencia - Version Reducida.xlsm`
