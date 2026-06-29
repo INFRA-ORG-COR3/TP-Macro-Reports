@@ -16,4 +16,4 @@ Usar y mantener estas dos versiones:
 
 ## Variantes historicas
 
-Los demas `.xlsm` en esta carpeta son variantes anteriores del proceso y se conservan solo como referencia.
+Las variantes anteriores del proceso estan en `../HIST/` y se conservan solo como referencia.

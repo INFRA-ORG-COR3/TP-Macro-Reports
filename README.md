@@ -18,15 +18,13 @@ Estas son las dos variantes activas que se deben usar y mantener:
 
 ## Otras variantes incluidas
 
-La carpeta `outputs/` tambien conserva variantes historicas que se construyeron durante el proceso:
+La carpeta `HIST/` conserva variantes historicas que se construyeron durante el proceso:
 
 - `Template TP - Macro Portal Transparencia.xlsm`
 - `Template TP - Macro Portal Transparencia - Version Reducida.xlsm`
 - `Template TP - Macro Portal Transparencia - Version Final Sin QPR.xlsm`
-- `Template TP - Macro Portal Transparencia - Version Final Sin QPR Sin Localizacion.xlsm`
 - `Template TP - Macro Portal Transparencia - Export por Municipio.xlsm`
 - `Template TP - Macro Portal Transparencia - Export Municipios Applicant Type.xlsm`
-- `Template TP - Macro Portal Transparencia - Export Municipios Applicant Type - Template Aguada.xlsm`
 
 ## Entradas de referencia
 
