@@ -1,0 +1,20 @@
+{
+  "id": "saas",
+  "display_name": "SaaS / Freshservice / Business Platform",
+  "enabled_modules": [
+    "ARCHITECTURE.md",
+    "REQUIREMENTS.md",
+    "DECISIONS.md",
+    "KNOWN_FAILURES.md",
+    "KNOWN_FIXES.md",
+    "SECURITY.md",
+    "ENVIRONMENT.md",
+    "TESTING.md",
+    "RUNBOOK.md",
+    "INTEGRATIONS.md",
+    "DATA_MODEL.md",
+    "RISKS.md",
+    "BACKLOG.md",
+    "GLOSSARY.md"
+  ]
+}

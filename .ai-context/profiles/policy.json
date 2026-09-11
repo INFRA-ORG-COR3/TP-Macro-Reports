@@ -1,0 +1,14 @@
+{
+  "id": "policy",
+  "display_name": "Policy / Document / Research",
+  "enabled_modules": [
+    "REQUIREMENTS.md",
+    "DECISIONS.md",
+    "SECURITY.md",
+    "TESTING.md",
+    "SOURCE_INDEX.md",
+    "RISKS.md",
+    "BACKLOG.md",
+    "GLOSSARY.md"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "software",
+  "display_name": "Software / Application Development",
+  "enabled_modules": [
+    "ARCHITECTURE.md",
+    "REQUIREMENTS.md",
+    "DECISIONS.md",
+    "KNOWN_FAILURES.md",
+    "KNOWN_FIXES.md",
+    "SECURITY.md",
+    "ENVIRONMENT.md",
+    "TESTING.md",
+    "DEPLOYMENT.md",
+    "INTEGRATIONS.md",
+    "DATA_MODEL.md",
+    "RISKS.md",
+    "BACKLOG.md",
+    "GLOSSARY.md"
+  ]
+}
