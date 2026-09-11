@@ -1,0 +1,20 @@
+{
+  "id": "server",
+  "display_name": "Server / Infrastructure",
+  "enabled_modules": [
+    "ARCHITECTURE.md",
+    "REQUIREMENTS.md",
+    "DECISIONS.md",
+    "KNOWN_FAILURES.md",
+    "KNOWN_FIXES.md",
+    "SECURITY.md",
+    "ENVIRONMENT.md",
+    "TESTING.md",
+    "DEPLOYMENT.md",
+    "RUNBOOK.md",
+    "INTEGRATIONS.md",
+    "RISKS.md",
+    "BACKLOG.md",
+    "GLOSSARY.md"
+  ]
+}

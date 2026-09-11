@@ -1,0 +1,18 @@
+{
+  "id": "data",
+  "display_name": "Excel / Data Analysis / Data Quality",
+  "enabled_modules": [
+    "REQUIREMENTS.md",
+    "DECISIONS.md",
+    "KNOWN_FAILURES.md",
+    "KNOWN_FIXES.md",
+    "SECURITY.md",
+    "TESTING.md",
+    "DATA_MODEL.md",
+    "DATA_PROFILE.md",
+    "SOURCE_INDEX.md",
+    "RISKS.md",
+    "BACKLOG.md",
+    "GLOSSARY.md"
+  ]
+}

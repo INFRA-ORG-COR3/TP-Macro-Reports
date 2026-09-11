@@ -17,3 +17,7 @@ exports/
 .vscode/
 .idea/
 
+# Universal AI Project Context Standard
+.context-backup/
+__pycache__/
+*.pyc
