@@ -337,3 +337,59 @@ Prefer:
 `baseline -> backup -> surgical change -> diff -> minimum justified validation -> context update -> commit`
 
 <!-- END MANAGED BLOCK: AI-OPERATING-STANDARD-VNEXT -->
+
+<!-- BEGIN MANAGED BLOCK: AUTOMATION-GUARDRAILS-V1 -->
+
+## PowerShell and Git Automation Guardrails
+
+These rules are mandatory for COR3 automation.
+
+### PowerShell
+
+- Do not use branching fallback keywords that have caused interactive parsing failures in prior COR3 sessions.
+- Prefer guard clauses, independent conditional blocks, functions with `return`, and deterministic control flow.
+- Do not use script-wide or global scope for temporary execution state.
+- Do not use persistent mutable counters for progress reporting.
+- Use explicit `Write-Progress` percentages or locally calculated bounded values.
+- Validate collections before indexing them.
+- Validate values before calling string methods on values that could be absent.
+- Detect optional commands before use.
+- Prefer simple deterministic syntax over compact or parser-sensitive constructs.
+- Large automation must be saved as a `.ps1` file and executed as a file rather than pasted interactively.
+
+### Git
+
+- Confirm repository root, branch, origin, and expected working-tree state before modification.
+- Preserve existing uncommitted work.
+- Never continue Git-dependent work after repository preflight fails.
+- Enumerate tracked changes with `git diff --name-only`.
+- Enumerate untracked files with `git ls-files --others --exclude-standard`.
+- Do not assume ordinary diff output includes untracked files.
+- Stage only explicitly approved files.
+- Validate staged paths and run `git diff --cached --check`.
+- Never force push automated context rollouts.
+- Fetch immediately before push and integrate remote advancement safely.
+- Verify local and remote HEAD after push.
+
+### Automated Commit Identity
+
+Before every automated commit that may be pushed:
+
+1. Resolve the authenticated GitHub login and numeric user ID.
+2. Build the GitHub noreply address as `<id>+<login>@users.noreply.github.com`.
+3. Configure `user.name` and `user.email` at repository scope only.
+4. Verify author and committer email after commit.
+5. Reverify identity after any rebase.
+6. Do not push when final commit identity is not the approved noreply identity.
+
+### Organization Rollout
+
+Use `bootstrap/ops/Invoke-COR3ContextMassRollout.ps1`.
+
+Default execution is audit-only.
+
+Use `-Apply` to modify, commit, and push every active non-fork COR3 repository except the canonical template.
+
+The rollout is idempotent and produces CSV and Markdown evidence.
+
+<!-- END MANAGED BLOCK: AUTOMATION-GUARDRAILS-V1 -->
