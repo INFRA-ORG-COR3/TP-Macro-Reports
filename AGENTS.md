@@ -113,3 +113,227 @@ A task is complete only when:
 - material context files reflect the new truth;
 - task state is updated;
 - explicit stop conditions were respected.
+
+<!-- BEGIN MANAGED BLOCK: AI-OPERATING-STANDARD-VNEXT -->
+
+## AI Execution and Validation Standard
+
+### Source of Truth
+
+Repository context is authoritative.
+
+Read in this order when applicable:
+
+1. `AGENTS.md`
+2. `PROJECT_STATE.md`
+3. current `tasks/active/TASK-xxx.md`
+4. `VALIDATION_STATE.md`
+5. `DECISIONS.md`
+6. `KNOWN_FAILURES.md`
+7. `KNOWN_FIXES.md`
+
+Do not depend on conversation history when repository context provides the answer.
+
+### Task Isolation
+
+Default operating rule:
+
+`1 objective = 1 task = 1 thread = 1 TASK-xxx.md = 1 validation contract`
+
+Do not expand the implementation scope merely because an adjacent issue is discovered.
+
+Record unrelated work as a separate task.
+
+### Required Implementation Flow
+
+Use this sequence:
+
+`context -> baseline -> risk -> validation contract -> change -> diff -> minimum justified validation -> context update -> commit`
+
+Before modification:
+
+1. Read repository context.
+2. Confirm repository and branch.
+3. Preserve existing uncommitted work.
+4. Establish the baseline.
+5. Assign validation risk V0-V3.
+6. Define the task Validation Contract.
+
+After modification:
+
+1. Review the actual diff.
+2. Identify which previous validation evidence the diff invalidates.
+3. Run only validation justified by the diff and risk.
+4. Update `VALIDATION_STATE.md`.
+5. Update task and project context.
+6. Record decisions, failures, and fixes when applicable.
+7. Review the final diff.
+8. Commit only after required validation succeeds.
+
+### Validation Risk Levels
+
+#### V0 - Documentation / comments / metadata / formatting
+
+Required:
+
+- diff review
+
+Optional only when relevant:
+
+- parser check
+- formatting check
+- syntax validation
+
+Do not run builds or test suites when executable behavior cannot be affected.
+
+#### V1 - Small isolated implementation or configuration change
+
+Required:
+
+- diff review
+- directly affected syntax, lint, parser, or targeted test
+
+Do not run the complete repository test suite by default.
+
+#### V2 - Cross-file / dependency / interface change
+
+Required:
+
+- diff review
+- targeted tests
+- build or typecheck when applicable
+
+Broader validation requires a dependency or blast-radius justification.
+
+#### V3 - Production / infrastructure / authentication / security / database / networking
+
+Required as applicable:
+
+- baseline
+- backup or rollback path
+- diff review
+- targeted validation
+- relevant build
+- relevant integration or smoke test
+- rollback or recovery verification
+
+V3 does not mean "run everything."
+
+Validation must still correspond to the actual affected surface.
+
+### No Redundant Validation
+
+Before running a validation command, determine whether the current diff can invalidate the previous successful result.
+
+If the current diff cannot affect what a previous validation demonstrated, that validation remains valid.
+
+Do not rerun unaffected broad test suites simply because a later small change occurred.
+
+Revalidate only:
+
+- changed behavior
+- changed dependencies
+- changed interfaces
+- changed configuration
+- changed security boundaries
+- changed infrastructure surfaces
+
+If validation beyond the active Validation Contract is proposed, identify the new risk that justifies it before running it.
+
+### Validation Contract
+
+Every implementation task must define before modification:
+
+- risk level
+- expected files or systems
+- required validation
+- validation explicitly not required
+- escalation conditions
+
+The Validation Contract is the default validation ceiling unless the implementation exposes a new risk or dependency.
+
+### Model and Reasoning Routing
+
+Use the least expensive reasoning level that can reliably complete the task.
+
+Routine work:
+
+- documentation
+- known fixes
+- narrow scripts
+- straightforward implementation
+- isolated configuration changes
+
+Default to balanced or medium reasoning.
+
+Complex work:
+
+- unclear root cause
+- cross-file refactor
+- architecture
+- unfamiliar codebase
+- difficult networking or infrastructure diagnosis
+
+Use high reasoning.
+
+Exceptional work:
+
+- security-sensitive investigation
+- difficult production incident
+- major migration
+- highly ambiguous multi-system problem
+- repeated previous failures
+
+Use the highest-capability model available when justified.
+
+Do not escalate reasoning because a task is long.
+
+Escalate because uncertainty, dependency depth, blast radius, or risk is high.
+
+### Execution Surface Routing
+
+Use Chat for:
+
+- decisions
+- architecture discussion
+- diagnosis
+- prompt design
+- quick analysis
+
+Use Codex for:
+
+- repository implementation
+- coding
+- PowerShell development
+- refactoring
+- Git
+- tests
+- code review
+
+Use Work for:
+
+- long multi-step investigations
+- multi-file research
+- cross-application work
+- web plus file workflows
+- finished professional deliverables
+
+Git remains the technical source of truth regardless of execution surface.
+
+### Change Discipline
+
+Do not:
+
+- make speculative changes
+- deploy merely to validate local reasoning
+- discard uncommitted work
+- assume an optional tool is installed
+- assume repository location
+- mark previous validation stale without a relevant diff
+- expand task scope without recording the expansion
+
+Prefer:
+
+`baseline -> backup -> surgical change -> diff -> minimum justified validation -> context update -> commit`
+
+<!-- END MANAGED BLOCK: AI-OPERATING-STANDARD-VNEXT -->
